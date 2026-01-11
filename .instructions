@@ -1,0 +1,26 @@
+Migration Blueprint: Windows Server 2016 to 2025 S2D Cluster
+Context: I am planning a migration of a Hyper-V Storage Spaces Direct (S2D) cluster from Windows Server 2016 to Windows Server 2025. I am using a "Clean-Install Rolling Upgrade" strategy (Evict -> Reinstall -> Rejoin).
+
+The Goal: I need an end-to-end PowerShell automation framework that ensures the Windows 2025 nodes inherit the exact "DNA" (Network naming, MAC-to-Interface mapping, and SET Switch configurations) of the 2016 nodes.
+
+Infrastructure Prerequisite:
+- A Shared Network Drive (Accessible by all nodes) must be available to store Node Identities and centralized Migration Logs for safety and auditability.
+
+Requirements for the Automation Scripting:
+
+Phase 1 (Pre-Validate): Run on 2016. Capture Network Adapter names, MAC addresses, Static IPs, and Cluster Health. Export this "Node Identity" to a JSON file on the SHARED DRIVE. Ensure no storage resync jobs are active before eviction.
+
+Phase 2 (Migration): Run on 2016. Automate the Suspend-ClusterNode -Drain and Remove-ClusterNode process, followed by clearing S2D metadata on local disks. Log activity to SHARED DRIVE.
+
+Phase 3 (Post-Validate): Run on 2025. Read the JSON file from the SHARED DRIVE to:
+- Rename physical NICs based on MAC address matching.
+- Install Hyper-V, Clustering, and DCB roles.
+- Rebuild a Switch Embedded Teaming (SET) Virtual Switch using the original 2016 adapter names.
+- Rejoin the original cluster and monitor storage resync completion.
+- Log activity to SHARED DRIVE.
+
+Specific Technical Focus:
+- Maintain Switch Embedded Teaming (SET) consistency.
+- Ensure Storage Resync is handled correctly between node transitions.
+- Finalize with Cluster Functional Level and Storage Pool updates once all nodes are 2025.
+- Centralized logging on the Shared Drive for end-to-end visibility.
