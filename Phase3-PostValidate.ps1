@@ -1,7 +1,7 @@
 <#
 .SYNOPSIS
     Phase 3: Post-Validate (Node Reintegration).
-    Run this on the Windows Server 2025 node AFTER clean install.
+    Run this on the new Windows Server 2019/2022 node AFTER clean install.
     Ensures network naming parity and cluster rejoin.
 #>
 

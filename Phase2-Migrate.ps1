@@ -2,6 +2,7 @@
 .SYNOPSIS
     Phase 2: Migrate (Node Eviction).
     Run this script to drain and remove the node from the cluster.
+    Supports rolling upgrades from Windows Server 2016 to 2019/2022.
     WARNING: This script will remove the node and clear storage metadata.
 #>
 
@@ -19,6 +20,12 @@ function Write-Log {
     $LogEntry = "[$TimeStamp] [$NodeName] [Phase 2] $Message"
     Write-Host $Message -ForegroundColor $Color
     $LogEntry | Out-File $LogPath -Append
+}
+
+$Confirm = Read-Host "CRITICAL: Are you sure you want to EVICT $NodeName and CLEAR its local storage metadata? (y/n)"
+if ($Confirm -ne 'y') {
+    Write-Host "Aborted by user." -ForegroundColor Red
+    exit 0
 }
 
 Write-Log "--- Starting Phase 2: Migrate/Eviction for $NodeName ---" -Color Cyan
