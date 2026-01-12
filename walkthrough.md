@@ -7,7 +7,7 @@ I have implemented a comprehensive 4-script framework to automate the rolling up
 | Phase | Script | Purpose |
 | :--- | :--- | :--- |
 | **Phase 1** | [Phase1-PreValidate.ps1](file:///c:/Arun/workspaces/arun4d_github/hyper_v_s2d_migration_25/Phase1-PreValidate.ps1) | Executes the 16-point checklist (Backups, VMs, SCCM, etc.) and captures Network DNA. |
-| **Phase 2** | [Phase2-Migrate.ps1](file:///c:/Arun/workspaces/arun4d_github/hyper_v_s2d_migration_25/Phase2-Migrate.ps1) | Drains and evicts the node. Logs activity to Shared Drive. |
+| **Phase 2** | [Phase2-Migrate.ps1](file:///c:/Arun/workspaces/arun4d_github/hyper_v_s2d_migration_25/Phase2-Migrate.ps1) | Drains/evicts node, places disks in maintenance, verifies status, and cleans up AD. |
 | **Phase 3** | [Phase3-PostValidate.ps1](file:///c:/Arun/workspaces/arun4d_github/hyper_v_s2d_migration_25/Phase3-PostValidate.ps1) | Restores NIC names from Shared Drive JSON, rebuilds SET Switch, and rejoins cluster. |
 | **Finalize** | [Finalize-ClusterUpgrade.ps1](file:///c:/Arun/workspaces/arun4d_github/hyper_v_s2d_migration_25/Finalize-ClusterUpgrade.ps1) | Updates Functional Level and Storage Pools once all nodes are upgraded. |
 

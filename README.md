@@ -11,7 +11,7 @@ This framework provides an automated, 3-phase PowerShell approach to migrating H
 
 ## 📁 Repository Structure
 - `Phase1-PreValidate.ps1`: Run on 2016 nodes to capture identity & perform checklist.
-- `Phase2-Migrate.ps1`: Run on 2016 nodes to drain and evict with safeguards.
+- `Phase2-Migrate.ps1`: Run on 2016 nodes to evict, handle disk maintenance, and clean up AD.
 - `Phase3-PostValidate.ps1`: Run on new nodes to restore identity and rejoin.
 - `Finalize-ClusterUpgrade.ps1`: Run once after all nodes are upgraded.
 - `walkthrough.md`: Detailed step-by-step execution guide.

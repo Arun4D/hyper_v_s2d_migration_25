@@ -15,7 +15,10 @@ Phase 1 (Pre-Validate): Run on 2016.
 - Ensure no storage resync jobs are active before eviction.
 
 Phase 2 (Migration): Run on 2016. 
+- Place physical disks in Maintenance Mode and verify status.
 - Automate the Suspend-ClusterNode -Drain and Remove-ClusterNode process.
+- Verify node is evicted and cluster service is stopped.
+- Delete the node computer account from Active Directory.
 - Include a final confirmation safeguard.
 - Clear S2D metadata on local disks. Log activity to SHARED DRIVE.
 
