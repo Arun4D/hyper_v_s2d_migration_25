@@ -22,6 +22,24 @@ function Write-Log {
     $LogEntry | Out-File $LogPath -Append
 }
 
+function Test-ModuleAvailability {
+    Param([string[]]$Modules)
+    $Missing = @()
+    foreach ($m in $Modules) {
+        if (!(Get-Module -ListAvailable -Name $m)) {
+            $Missing += $m
+        }
+    }
+    if ($Missing) {
+        Write-Log "CRITICAL: Missing required PowerShell modules: $($Missing -join ', ')" -Color Red
+        Write-Log "Please install them via 'Install-WindowsFeature' or RSAT before continuing." -Color White
+        exit 1
+    }
+}
+
+# Pre-flight Module Check
+Test-ModuleAvailability -Modules @("FailoverClusters", "Storage", "Hyper-V", "NetAdapter")
+
 function Read-Confirmation {
     Param([string]$Message)
     $response = Read-Host "$Message (y/n)"

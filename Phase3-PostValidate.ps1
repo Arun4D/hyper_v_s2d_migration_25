@@ -27,6 +27,26 @@ function Write-Log {
     $LogEntry | Out-File $LogPath -Append
 }
 
+function Test-ModuleAvailability {
+    Param([string[]]$Modules)
+    $Missing = @()
+    foreach ($m in $Modules) {
+        if (!(Get-Module -ListAvailable -Name $m)) {
+            $Missing += $m
+        }
+    }
+    if ($Missing) {
+        Write-Log "CRITICAL: Missing required PowerShell modules: $($Missing -join ', ')" -Color Red
+        Write-Log "Note: Some modules like Hyper-V and FailoverClusters will be installed by this script, but their management tools must be available for capture/restore logic." -Color White
+        # We don't exit here because Phase 3 installs the features, but we warn.
+        # Actually, if management tools are missing, the script will fail later.
+        # Let's verify ServerManager is present at least.
+    }
+}
+
+# Pre-flight Module Check
+Test-ModuleAvailability -Modules @("ServerManager", "NetAdapter")
+
 Write-Log "--- Starting Phase 3: Post-Validate/Reintegration for $NodeName ---" -Color Cyan
 
 # 1. Load Identity

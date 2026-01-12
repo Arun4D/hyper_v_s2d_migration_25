@@ -22,6 +22,26 @@ function Write-Log {
     $LogEntry | Out-File $LogPath -Append
 }
 
+function Test-ModuleAvailability {
+    Param([string[]]$Modules, [bool]$Fatal = $true)
+    $Missing = @()
+    foreach ($m in $Modules) {
+        if (!(Get-Module -ListAvailable -Name $m)) {
+            $Missing += $m
+        }
+    }
+    if ($Missing) {
+        $MsgSeverity = if ($Fatal) { "CRITICAL" } else { "WARNING" }
+        $Color = if ($Fatal) { "Red" } else { "Yellow" }
+        Write-Log "[$MsgSeverity] Missing modules: $($Missing -join ', ')" -Color $Color
+        if ($Fatal) { exit 1 }
+    }
+}
+
+# Pre-flight Module Check
+Test-ModuleAvailability -Modules @("FailoverClusters", "Storage")
+Test-ModuleAvailability -Modules @("ActiveDirectory") -Fatal $false
+
 $Confirm = Read-Host "CRITICAL: Are you sure you want to EVICT $NodeName and CLEAR its local storage metadata? (y/n)"
 if ($Confirm -ne 'y') {
     Write-Host "Aborted by user." -ForegroundColor Red

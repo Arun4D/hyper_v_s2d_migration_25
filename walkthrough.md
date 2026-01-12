@@ -44,6 +44,7 @@ Run `Finalize-ClusterUpgrade.ps1`.
 ```
 
 ## Safety Features:
+- **Module Validation**: Checks for required RSAT and feature modules before running any automation.
 - **16-Point Checklist**: Ensures all prerequisites (backups, service notifications, AD coordination) are met before starting.
 - **Centralized Log**: Every script appends to per-node log files on the shared drive.
 - **Identity Safety**: Node identity is stored off-box before eviction.

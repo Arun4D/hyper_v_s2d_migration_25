@@ -5,7 +5,7 @@ This framework provides an automated, 3-phase PowerShell approach to migrating H
 ## 🚀 Key Features
 - **Network DNA Preservation**: Automatically captures MAC-to-Interface mappings and SET Switch configurations to ensure consistency after OS reinstall.
 - **16-Point Pre-Validation Checklist**: Comprehensive automated and manual checks (Backups, VM Status, Disk Space, Pending Updates, SCCM, Certificates, etc.) to ensure production readiness.
-- **Production Safety**: Multi-stage health checks (Cluster Health, Storage Resync) prevent destructive actions if the cluster is unhealthy.
+- **Pre-flight Module Checks**: Validates presence of required PowerShell modules (FailoverClusters, Storage, Hyper-V, etc.) before execution.
 - **Traceability**: Per-node logging (`Migration_<NodeName>.log`) saved to a centralized shared drive.
 - **Idempotency**: Scripts can be run multiple times; they verify existing state before applying changes.
 
